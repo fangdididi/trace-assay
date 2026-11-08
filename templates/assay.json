@@ -1,0 +1,67 @@
+{
+  "card": {
+    "goal": "Imprint test-first debugging and cited logs on an in-house coding agent",
+    "imprints": [
+      {
+        "id": "repro-first",
+        "title": "Reproduce the failing test before editing"
+      },
+      {
+        "id": "cite-log",
+        "title": "Cite the log or assertion that proved the fix"
+      }
+    ],
+    "refuse": [
+      {
+        "id": "customer-dump",
+        "title": "Sessions that paste customer records"
+      }
+    ],
+    "split_seed": 17,
+    "holdout_frac": 0.25,
+    "min_success_per_imprint": 2,
+    "max_near_dup": 0.85
+  },
+  "traces": [
+    {
+      "id": "pay-ok",
+      "family": "pay",
+      "outcome": "success",
+      "imprints": [
+        "repro-first",
+        "cite-log"
+      ],
+      "text": "The billing test test_invoice_total was red. I reran pytest on that file first, read the assertion 19.99 versus 20.00, fixed rounding in the invoice helper, and reran until the same line passed."
+    },
+    {
+      "id": "auth-ok",
+      "family": "auth",
+      "outcome": "success",
+      "imprints": [
+        "repro-first",
+        "cite-log"
+      ],
+      "text": "Login lockout failed in test_lockout_after_three. I reproduced it with the existing fixture, counted the three 401 responses in the captured log, then moved the counter increment ahead of the early return."
+    },
+    {
+      "id": "search-ok",
+      "family": "search",
+      "outcome": "success",
+      "imprints": [
+        "repro-first",
+        "cite-log"
+      ],
+      "text": "Highlight search missed stemmed tokens. I ran the stem fixture test, watched it expect 'run' to match 'running', updated the analyzer, and pasted the passing assertion into the notes."
+    },
+    {
+      "id": "notify-ok",
+      "family": "notify",
+      "outcome": "success",
+      "imprints": [
+        "repro-first",
+        "cite-log"
+      ],
+      "text": "Digest mail skipped weekend hours. I executed test_weekend_skip, confirmed the captured cron line fired on Saturday, and narrowed the weekday guard."
+    }
+  ]
+}
